@@ -20,17 +20,21 @@ public class App
         }
         System.out.println( ".." );
         
-        if ( 5 != args.length) {
-            System.out.println("Usage: AutoTrader <TraderName> <StockName> <BuyPrice> <SellPrice> <Quantity> ");
+        if ( 3 != args.length) {
+//            System.out.println("Usage: AutoTrader <TraderName> <StockName> <BuyPrice> <SellPrice> <Quantity> ");
+            System.out.println("Usage: AutoTrader <TraderName> <StockName> <Quantity> ");
             return;
         }        
                 
         String traderName = args[0];
         String stockName = args[1];
-        double buyPrice = app.parseDouble(args[2]);        
-        double sellPrice = app.parseDouble(args[3]);        
-        long qty = Long.parseLong(args[4]);
+//        double buyPrice = app.parseDouble(args[2]);        
+//        double sellPrice = app.parseDouble(args[3]);        
+        long qty = Long.parseLong(args[2]);
 
+        
+        double openPrice = 0.0;
+        
         while (true)
         {
             // if (isMarketOpen())
@@ -38,25 +42,23 @@ public class App
                 double ltp = app.scrape(stockName);
                 System.out.println("[stockName] = " + stockName + "[LTP] = " + ltp);	
                 
-                if ( Double.compare (ltp, buyPrice + 1) <= 0 ) {
-                    System.out.println("Very close to Buying.. [stockName] = " + stockName + " [ltp] = " + ltp + " [buyPrice] = " + buyPrice );
-                    
-                    if ( Double.compare (ltp, buyPrice) <= 0 )
-                    {
-                        String trade = app.createTrade(traderName, stockName, buyPrice, true, qty) ; 
-                        System.out.println(trade);                        
-                    } 
+                if ( 0.0 == openPrice )
+                {                    
+                    openPrice = ltp;
+                    System.out.println("[openPrice] = " + openPrice );
                 }
-                else if ( Double.compare (ltp, sellPrice - 1) >= 0 ) {
-                    System.out.println("Very close to Selling.. [stockName] = " + stockName + " [ltp] = " + ltp + " [sellPrice] = " + sellPrice );
-                    
-                    if ( Double.compare (ltp, sellPrice) >= 0 ) 
-                    {
-                        String trade = app.createTrade(traderName, stockName, sellPrice, false, qty) ; 
-                        System.out.println(trade);                        
-                    }
+                
+                if ( Double.compare (ltp, 0.99 * openPrice) <= 0 )
+                {
+                    String trade = app.createTrade(traderName, stockName, ltp, true, qty) ; 
+                    System.out.println(trade);                        
+                }             
+                else if ( Double.compare (ltp, 1.01 * openPrice ) >= 0 ) 
+                {
+                    String trade = app.createTrade(traderName, stockName, ltp, false, qty) ; 
+                    System.out.println(trade);                        
                 }
-                                
+                
                 Thread.sleep(6000);
             }
         }
@@ -99,13 +101,13 @@ public double parseDouble(String price) throws Exception {
 }
 
     
-public String createTrade(String traderName, String stockName, double buyPrice, boolean isBuy , long qty) {
+public String createTrade(String traderName, String stockName, double price, boolean isBuy , long qty) {
     return new String 
         ("New Trade: [traderName] = " + traderName + 
-         " [stockName] " + stockName + 
-         " [ Buy/Sell ] " + ( isBuy ? "Buy" : "Sell" ) + 
-         " [buyPrice] " + buyPrice + 
-         " [ Qty ] " + qty);    
+         " [stockName] = " + stockName + 
+         " [ Buy/Sell ] = " + ( isBuy ? "Buy " : "Sell " ) + 
+         " [price] = " + price  + 
+         " [ Qty ] = " + qty);    
 }
     
 }         

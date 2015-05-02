@@ -25,10 +25,8 @@
             <configuration>
                 <mainClass>com.kc.stk2.App</mainClass>
 		<arguments>
-            <argument>ASHOK</argument>
+            <argument>BEE</argument>
             <argument>TATASTEEL</argument>
-            <argument>362.30</argument>
-            <argument>368.75</argument>
             <argument>100</argument>
           </arguments>
             </configuration>
