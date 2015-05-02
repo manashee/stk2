@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd /home/ashok/autotrader/Trial1/PositionManager/scripts
 
- wget -q -U Mozilla -O ../cache/TATASTEEL.xml 'http://www.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=TATASTEEL'
+ wget -q -U Mozilla -O ../cache/TATASTEEL.xml 'http://www.manashee.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=TATASTEEL'
 
  lp=$(grep "\"lastPrice\":\"" ../cache/TATASTEEL.xml |  perl -ne '/\"lastPrice\":\"(.*?)\"/i; print "$1\n"')
 

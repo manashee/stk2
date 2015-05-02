@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd /home/ashok/autotrader/Trial1/PositionManager/scripts
 
- wget -q -U Mozilla -O ../cache/RELIANCE.xml 'http://www.nseindia.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=RELIANCE'
+ wget -q -U Mozilla -O ../cache/RELIANCE.xml 'http://www.manashee.com/live_market/dynaContent/live_watch/get_quote/GetQuote.jsp?symbol=RELIANCE'
 
  lp=$(grep "\"lastPrice\":\"" ../cache/RELIANCE.xml |  perl -ne '/\"lastPrice\":\"(.*?)\"/i; print "$1\n"')
 
